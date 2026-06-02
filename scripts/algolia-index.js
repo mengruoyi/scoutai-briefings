@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 /**
- * ScoutAI Algolia 索引推送脚本
- * 将资讯内容推送到 Algolia 搜索引擎
+ * ScoutAI Algolia 索引推送脚本 - 简化版
  */
 
 const fs = require('fs');
@@ -10,7 +9,7 @@ const https = require('https');
 
 // Algolia 配置
 const ALGOLIA_APP_ID = 'CQ8365G2HD';
-const ALGOLIA_API_KEY = process.env.ALGOLIA_ADMIN_API_KEY || ''; // 从环境变量获取
+const ALGOLIA_API_KEY = process.env.ALGOLIA_ADMIN_API_KEY || '';
 const ALGOLIA_INDEX_NAME = 'scoutai_news';
 
 const BRIEFING_DIR = path.join(__dirname, '..', 'briefing');
@@ -18,12 +17,15 @@ const BRIEFING_DIR = path.join(__dirname, '..', 'briefing');
 // 读取所有简报文件
 function getAllBriefings() {
   if (!fs.existsSync(BRIEFING_DIR)) {
+    console.log('⚠️ briefing 目录不存在');
     return [];
   }
   
   const files = fs.readdirSync(BRIEFING_DIR)
     .filter(f => f.endsWith('.html'))
     .sort((a, b) => b.localeCompare(a));
+  
+  console.log(`📁 找到 ${files.length} 个资讯文件`);
   
   const records = [];
   
@@ -39,58 +41,72 @@ function getAllBriefings() {
     const date = `${year}-${month}-${day}`;
     const time = `${hour}:${minute}`;
     
-    // 提取文章数据
-    const articles = extractArticles(content, date, time);
+    // 使用简单字符串提取
+    const articles = extractArticlesSimple(content, date, time, file);
     records.push(...articles);
   });
   
   return records;
 }
 
-// 从 HTML 中提取文章数据
-function extractArticles(html, date, time) {
+// 简单的文章提取
+function extractArticlesSimple(html, date, time, filename) {
   const articles = [];
   
-  // 简单的正则提取（实际项目中可以用 cheerio）
-  const articleRegex = /<div class="article">[\s\S]*?<div class="article-title">(.*?)<\/div>[\s\S]*?<div class="article-source">(.*?)<\/div>[\s\S]*?<div class="article-content">([\s\S]*?)<\/div>/g;
+  // 分割每个 article
+  const parts = html.split('<div class="article">');
   
-  let match;
-  let index = 0;
-  
-  while ((match = articleRegex.exec(html)) !== null) {
-    const title = match[1].replace(/<[^>]*>/g, '').trim();
-    const source = match[2].replace(/<[^>]*>/g, '').trim();
-    const content = match[3]
+  for (let i = 1; i < parts.length; i++) {
+    const part = parts[i];
+    
+    // 提取标题
+    const titleMatch = part.match(/<div class="article-title">([^<]*)/);
+    if (!titleMatch) continue;
+    const title = titleMatch[1].trim();
+    
+    // 提取来源
+    const sourceMatch = part.match(/<div class="article-meta">([^<]*)/);
+    const source = sourceMatch ? sourceMatch[1].trim() : '未知来源';
+    
+    // 提取内容
+    const contentMatch = part.match(/<div class="article-content">([\s\S]*?)<\/div>\s*<a /);
+    const rawContent = contentMatch ? contentMatch[1] : '';
+    const content = rawContent
       .replace(/<[^>]*>/g, ' ')
+      .replace(/&nbsp;/g, ' ')
       .replace(/\s+/g, ' ')
       .trim()
-      .substring(0, 5000); // 限制长度
+      .substring(0, 3000);
     
     // 提取链接
-    const linkMatch = match[0].match(/href="([^"]*)"/);
+    const linkMatch = part.match(/href="([^"]*)"/);
     const url = linkMatch ? linkMatch[1] : '';
     
-    // 提取板块
+    // 分类
     let category = '其他';
     if (source.includes('Product Hunt')) category = '产品发布';
     else if (source.includes('GitHub')) category = '开源项目';
-    else if (source.includes('VC') || source.includes('A16Z')) category = 'VC洞察';
+    else if (source.includes('VC') || source.includes('A16Z') || source.includes('a16z')) category = 'VC洞察';
     else if (source.includes('媒体')) category = '科技媒体';
+    else if (source.includes('研究')) category = '研究动态';
+    
+    const objectID = `${filename}-${i}`;
     
     articles.push({
-      objectID: `${date}-${time}-${index}`,
-      title: title,
-      source: source,
-      content: content,
-      url: url,
-      category: category,
-      date: date,
-      time: time,
+      objectID,
+      title,
+      source,
+      content,
+      url,
+      category,
+      date,
+      time,
+      filename,
       timestamp: new Date(`${date}T${time}:00`).getTime()
     });
-    
-    index++;
   }
+  
+  console.log(`  - ${filename}: ${articles.length} 条`);
   
   return articles;
 }
@@ -103,7 +119,16 @@ function pushToAlgolia(records) {
       return;
     }
     
-    const data = JSON.stringify(records);
+    console.log(`\n📤 推送到 Algolia (${records.length} 条)...`);
+    
+    const batchBody = {
+      requests: records.map(record => ({
+        action: 'addObject',
+        body: record
+      }))
+    };
+    
+    const data = JSON.stringify(batchBody);
     
     const options = {
       hostname: `${ALGOLIA_APP_ID}.algolia.net`,
@@ -112,7 +137,8 @@ function pushToAlgolia(records) {
       headers: {
         'Content-Type': 'application/json',
         'X-Algolia-API-Key': ALGOLIA_API_KEY,
-        'X-Algolia-Application-Id': ALGOLIA_APP_ID
+        'X-Algolia-Application-Id': ALGOLIA_APP_ID,
+        'Content-Length': Buffer.byteLength(data)
       }
     };
     
@@ -125,26 +151,23 @@ function pushToAlgolia(records) {
       
       res.on('end', () => {
         if (res.statusCode >= 200 && res.statusCode < 300) {
-          resolve(JSON.parse(responseData));
+          const result = JSON.parse(responseData);
+          console.log(`✅ Algolia 推送成功: ${result.objectIDs.length} 条记录`);
+          resolve(result);
         } else {
-          reject(new Error(`Algolia API error: ${res.statusCode} - ${responseData}`));
+          console.error(`❌ Algolia 错误: ${res.statusCode}`);
+          console.error(responseData);
+          reject(new Error(`Algolia API error: ${res.statusCode}`));
         }
       });
     });
     
     req.on('error', (error) => {
+      console.error(`❌ 网络错误: ${error.message}`);
       reject(error);
     });
     
-    // 构建批量操作请求体
-    const batchBody = {
-      requests: records.map(record => ({
-        action: 'addObject',
-        body: record
-      }))
-    };
-    
-    req.write(JSON.stringify(batchBody));
+    req.write(data);
     req.end();
   });
 }
@@ -156,32 +179,24 @@ async function main() {
   
   if (!ALGOLIA_API_KEY) {
     console.error('❌ 错误: 请设置 ALGOLIA_ADMIN_API_KEY 环境变量');
-    console.log('   示例: set ALGOLIA_ADMIN_API_KEY=你的AdminAPIKey');
+    console.log('   示例: $env:ALGOLIA_ADMIN_API_KEY="你的AdminAPIKey"');
     process.exit(1);
   }
   
-  console.log('📖 读取资讯文件...');
   const records = getAllBriefings();
-  console.log(`✅ 找到 ${records.length} 条资讯`);
   
   if (records.length === 0) {
     console.log('⚠️ 没有资讯需要推送');
     return;
   }
   
-  console.log('\n📤 推送到 Algolia...');
   try {
-    const result = await pushToAlgolia(records);
-    console.log(`✅ 推送成功！`);
-    console.log(`   对象ID: ${result.objectIDs ? result.objectIDs.length : 'unknown'} 个`);
-    console.log(`   任务ID: ${result.taskID || 'N/A'}`);
+    await pushToAlgolia(records);
+    console.log('\n🎉 完成！资讯已可搜索');
   } catch (error) {
-    console.error('❌ 推送失败:', error.message);
+    console.error('\n❌ 推送失败');
     process.exit(1);
   }
-  
-  console.log('\n🎉 完成！资讯已可搜索');
-  console.log(`   搜索地址: https://scoutai-briefings.vercel.app`);
 }
 
 main();
