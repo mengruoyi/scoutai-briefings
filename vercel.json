@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "name": "scoutai-briefings",
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/briefing/(.*)",
+      "dest": "/briefing/$1"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}

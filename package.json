@@ -1,0 +1,12 @@
+{
+  "name": "scoutai-briefings",
+  "version": "1.0.0",
+  "description": "ScoutAI - AI行业情报简报网站",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "vercel": "^32.0.0"
+  }
+}
