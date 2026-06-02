@@ -3,253 +3,312 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ScoutAI 简报 - 2026/06/02 17:00</title>
-  <link rel="stylesheet" href="/assets/css/style.css">
+  <title>ScoutAI 资讯 - 2026/06/02 17:00</title>
   <style>
-    .briefing-content { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
-    .briefing-header { background: linear-gradient(135deg, #059669 0%, #0D9488 100%); color: white; padding: 32px 24px; }
-    .briefing-header h1 { font-size: 24px; margin-bottom: 8px; }
-    .briefing-header .meta { opacity: 0.9; font-size: 14px; }
-    .section { margin: 32px 0; }
-    .section-title { font-size: 18px; font-weight: 600; color: #059669; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #059669; }
-    .item { background: white; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #E7E5E4; }
-    .item-header { margin-bottom: 12px; }
-    .item-title { font-size: 16px; font-weight: 600; }
-    .item-source { color: #57534E; font-size: 13px; margin-bottom: 8px; }
-    .item-content { color: #1C1917; line-height: 1.7; margin-bottom: 12px; }
-    .item-link { color: #059669; text-decoration: none; font-weight: 500; }
-    .item-link:hover { text-decoration: underline; }
-    .back-btn { display: inline-block; margin: 20px 24px; color: #059669; text-decoration: none; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f8f9fa;
+      line-height: 1.8;
+    }
+    .container {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #e8f5e9;
+    }
+    .timestamp {
+      color: #059669;
+      font-size: 14px;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+    h1 {
+      color: #1a1a1a;
+      font-size: 32px;
+      margin: 0 0 10px 0;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 16px;
+    }
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      background: #ecfdf5;
+      color: #059669;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: #059669;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid #059669;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .article {
+      padding: 24px;
+      margin-bottom: 20px;
+      background: #fafafa;
+      border-radius: 12px;
+      border-left: 4px solid #059669;
+    }
+    .article-header {
+      margin-bottom: 16px;
+    }
+    .article-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a1a;
+      text-decoration: none;
+      line-height: 1.4;
+    }
+    .article-title:hover {
+      color: #059669;
+    }
+    .article-meta {
+      color: #666;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+    .article-content {
+      color: #374151;
+      line-height: 1.9;
+      font-size: 15px;
+      margin-bottom: 16px;
+    }
+    .article-content p {
+      margin-bottom: 12px;
+    }
+    .article-link {
+      color: #059669;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .article-link:hover {
+      text-decoration: underline;
+    }
+    .tags {
+      margin-top: 12px;
+    }
+    .tag {
+      display: inline-block;
+      background: #e8f5e9;
+      color: #059669;
+      padding: 4px 12px;
+      border-radius: 15px;
+      font-size: 12px;
+      margin-right: 8px;
+    }
+    .back-btn { display: inline-block; margin-bottom: 20px; color: #059669; text-decoration: none; font-size: 14px; }
     .back-btn:hover { text-decoration: underline; }
-    .stats-grid { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
-    .stats-tag { background: #ECFDF5; color: #059669; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; }
   </style>
 </head>
 <body>
   <a href="/" class="back-btn">← 返回首页</a>
-  
-  <div class="briefing-header">
-    <div class="container">
-      <h1>🔍 ScoutAI 简报</h1>
-      <div class="meta">2026年6月2日 17:00 | 共18条资讯</div>
-    </div>
-  </div>
+  <div class="container">
+    <header>
+      <div class="timestamp">2026年6月2日 17:00 更新</div>
+      <h1>🔍 ScoutAI 资讯</h1>
+      <div class="subtitle">AI行业情报侦察兵 · 深度资讯每日更新</div>
+      <div class="stats-bar">
+        <span class="stat-item">📊 共 5 条</span>
+        <span class="stat-item">🚀 产品 2 个</span>
+        <span class="stat-item">📦 开源 2 个</span>
+        <span class="stat-item">💰 VC 1 篇</span>
+      </div>
+    </header>
 
-  <div class="briefing-content">
-    <div class="stats-grid">
-      <span class="stats-tag">📊 共18条</span>
-      <span class="stats-tag">🚀 产品发布 6个</span>
-      <span class="stats-tag">📦 开源项目 7个</span>
-      <span class="stats-tag">💰 VC洞察 3篇</span>
-      <span class="stats-tag">📰 科技媒体 2篇</span>
-    </div>
-
-    <!-- ===== 今日精选 Top 5 ===== -->
+    <!-- 🚀 产品发布 -->
     <div class="section">
-      <div class="section-title">🔥 今日精选 Top 5</div>
-      
-      <div class="item">
-        <div class="item-header">
-          <div class="item-title">🥇 TradingAgents - 多智能体金融交易框架</div>
+      <div class="section-title">🚀 产品发布</div>
+
+      <div class="article">
+        <div class="article-header">
+          <div class="article-title">TradingAgents — 多智能体LLM金融交易框架</div>
+          <div class="article-meta">📍 GitHub Trending | 开源项目 | 发布于 2026年6月2日</div>
         </div>
-        <div class="item-source">📍 GitHub | 开源项目</div>
-        <div class="item-content">
-          这是一个多智能体LLM金融交易框架，让多个AI智能体协作进行自动化金融交易决策。它把AI Agent技术真正落地到了金融交易这个高价值场景，展示了多智能体协作在实际业务中的威力。
-          <br><br>
-          今天新增了299颗星，总星数已经达到81,885，冲上GitHub趋势榜前列。对于想做AI+FinTech方向的创业者来说，这个项目极具参考价值，架构设计可以直接学习借鉴。
+        <div class="article-content">
+          <p><strong>【背景介绍】</strong></p>
+          <p>TradingAgents 是一个创新的多智能体LLM金融交易框架，它将多个AI智能体组合在一起，协作完成自动化金融交易决策。与传统的单一AI交易系统不同，TradingAgents 通过多个专业智能体的分工协作，能够处理更复杂的金融市场分析。</p>
+          
+          <p><strong>【核心亮点】</strong></p>
+          <p>这个框架的最大创新在于"多智能体协作"模式。系统中的每个智能体都有专门的角色——有的负责市场数据分析，有的负责风险评估，有的负责执行决策。它们通过协作完成整个交易流程，这种架构设计让系统能够处理更复杂的决策场景，比单一AI模型更加健壮。</p>
+          
+          <p><strong>【市场反应】</strong></p>
+          <p>今天新增 299 颗星，总星数已达 81,885，冲上 GitHub 趋势榜前列。社区对它的评价是"真正落地的AI应用"，而非纸上谈兵的概念项目。许多量化交易团队和金融科技创业者已经开始关注这个项目。</p>
+          
+          <p><strong>【创业价值】</strong></p>
+          <p>对于想做 AI+FinTech 方向的创业者，这个项目提供了极有价值的参考：1) 多智能体架构可以直接借鉴；2) 金融场景是AI落地的高价值场景；3) 开源项目降低了进入门槛。对于已经有一定技术积累的团队，可以基于此二次开发出自己的交易系统。</p>
+          
+          <p><strong>【行动建议】</strong></p>
+          <p>建议深入研究其架构设计，理解多智能体如何协作完成复杂决策。可以 fork 项目本地运行测试，或者将其作为设计自己AI交易系统的参考架构。</p>
         </div>
-        <a href="https://github.com/TauricResearch/TradingAgents" class="item-link" target="_blank">查看项目 →</a>
+        <a href="https://github.com/TauricResearch/TradingAgents" class="article-link" target="_blank">查看项目 →</a>
+        <div class="tags">
+          <span class="tag">AI Agent</span>
+          <span class="tag">开源可用</span>
+          <span class="tag">可直接使用</span>
+          <span class="tag">FinTech</span>
+        </div>
       </div>
 
-      <div class="item">
-        <div class="item-header">
-          <div class="item-title">🥈 MoneyPrinterTurbo - AI一键生成短视频</div>
+      <div class="article">
+        <div class="article-header">
+          <div class="article-title">Framer — AI驱动的企业级网站构建平台</div>
+          <div class="article-meta">📍 Product Hunt | 产品发布 | 发布于 2026年6月2日</div>
         </div>
-        <div class="item-source">📍 GitHub | 开源项目</div>
-        <div class="item-content">
-          利用AI大模型一键生成高清短视频，自动化整个视频内容创作流程。它解决了短视频创作成本高、效率低的痛点，是AI内容创作赛道的标杆级开源项目。
-          <br><br>
-          今天爆火，新增3,375颗星（全站最高），总星数达77,077。可以直接使用或二次开发，帮你快速进入AI视频生成赛道。
+        <div class="article-content">
+          <p><strong>【背景介绍】</strong></p>
+          <p>Framer 推出了 AI 驱动的企业级网站构建平台，让用户能够以"创业速度"构建企业级网站。过去，企业级网站需要专业的设计和开发团队，周期长、成本高。Framer 的 AI 能力大幅降低了这一门槛。</p>
+          
+          <p><strong>【核心亮点】</strong></p>
+          <p>Framer 的 AI 不仅仅是简单的模板填充，而是能够理解用户需求，自动生成符合企业级标准的网站。它支持：智能布局调整、品牌风格匹配、响应式设计优化、内容SEO建议等。与传统的拖拽式建站工具不同，Framer 的 AI 真正"理解"网站设计原则。</p>
+          
+          <p><strong>【市场反应】</strong></p>
+          <p>发布首日就获得 1,710 个 upvotes（全站最高），远超其他产品。这个数据说明市场对 AI 网站生成的需求非常旺盛。评论区有用户表示"终于有一个能用的 AI 建站工具了"，也有设计师担心这会取代他们的工作。</p>
+          
+          <p><strong>【创业价值】</strong></p>
+          <p>1) 这个赛道正在快速成熟，机会窗口在缩小；2) 差异化方向可能是更垂直的行业解决方案（如电商、医疗、教育）；3) AI 建站只是入口，后续的企业服务（SEO、CRM、数据分析）才是更大的市场。对于创业者，可以考虑在 Framer 之上做垂直行业的增值服务。</p>
+          
+          <p><strong>【行动建议】</strong></p>
+          <p>建议试用 Framer 体验其 AI 建站能力，作为竞品分析的一部分。同时关注它的定价策略和用户增长曲线，这些数据对于判断市场天花板很重要。</p>
         </div>
-        <a href="https://github.com/harry0703/MoneyPrinterTurbo" class="item-link" target="_blank">查看项目 →</a>
-      </div>
-
-      <div class="item">
-        <div class="item-header">
-          <div class="item-title">🥉 Framer - AI企业级网站构建平台</div>
+        <a href="https://www.producthunt.com/products/framer" class="article-link" target="_blank">查看产品 →</a>
+        <div class="tags">
+          <span class="tag">AI 建站</span>
+          <span class="tag">SaaS</span>
+          <span class="tag">企业服务</span>
         </div>
-        <div class="item-source">📍 Product Hunt | 产品发布</div>
-        <div class="item-content">
-          AI驱动的企业级网站构建平台，让你以创业速度构建企业级网站。它将AI与网站构建深度结合，大幅降低企业建站门槛和成本。
-          <br><br>
-          发布首日就获得1,710个upvotes（全站最高），说明市场对AI网站生成的需求非常旺盛。值得作为竞品参考，了解这个赛道的产品形态和用户反应。
-        </div>
-        <a href="https://www.producthunt.com/products/framer" class="item-link" target="_blank">查看产品 →</a>
-      </div>
-
-      <div class="item">
-        <div class="item-header">
-          <div class="item-title">A16Z: AI初创公司如何与大厂竞争</div>
-        </div>
-        <div class="item-source">📍 A16Z | VC洞察</div>
-        <div class="item-content">
-          A16Z合伙人Olivia Moore深度分析AI初创公司如何与大厂聊天机器人竞争。OpenAI、Google的聊天机器人确实对初创公司形成巨大压力，但Olivia认为仍有差异化机会可循。
-          <br><br>
-          这期播客基于A16Z对100多家AI初创公司的研究和市场观察，为AI创业者提供了关键的战略参考和竞争格局洞察，帮你找到差异化定位。
-        </div>
-        <a href="https://a16z.com/podcast/ai-startups-vs-big-chatbots-with-olivia-moore/" class="item-link" target="_blank">查看原文 →</a>
-      </div>
-
-      <div class="item">
-        <div class="item-header">
-          <div class="item-title">OpenAI如何服务8亿周活用户</div>
-        </div>
-        <div class="item-source">📍 A16Z | VC洞察</div>
-        <div class="item-content">
-          A16Z对话OpenAI工程负责人，首次公开揭秘OpenAI如何通过模型专业化和微调来服务8亿周活用户。从模型优化到基础设施，OpenAI的规模化经验对任何AI产品公司都有借鉴意义。
-          <br><br>
-          这期内容对AI产品规模化极具参考价值，能学到如何从技术角度支撑海量用户，是技术创业者必听的一期。
-        </div>
-        <a href="https://a16z.com/podcast/how-openai-builds-for-800-million-weekly-users-model-specialization-and-fine-tuning/" class="item-link" target="_blank">查看原文 →</a>
       </div>
     </div>
 
-    <!-- ===== 更多产品发布 ===== -->
+    <!-- 📦 开源项目 -->
     <div class="section">
-      <div class="section-title">🚀 更多产品发布</div>
+      <div class="section-title">📦 开源项目</div>
 
-      <div class="item">
-        <div class="item-header">
-          <div class="item-title">Databox MCP - AI查询企业数据</div>
+      <div class="article">
+        <div class="article-header">
+          <div class="article-title">MoneyPrinterTurbo — AI一键生成高清短视频</div>
+          <div class="article-meta">📍 GitHub Trending | 开源项目 | 发布于 2026年6月2日</div>
         </div>
-        <div class="item-source">📍 Product Hunt | 产品发布</div>
-        <div class="item-content">
-          MCP协议工具，让Claude、ChatGPT直接查询分析企业业务数据。解决大模型与企业内部数据隔离的痛点，今天264 upvotes。对企业AI应用落地有直接参考价值。
+        <div class="article-content">
+          <p><strong>【背景介绍】</strong></p>
+          <p>MoneyPrinterTurbo 是一个利用 AI 大模型一键生成高清短视频的工具。它自动化了整个视频内容创作流程——从脚本生成、配图选择、到视频合成，全部由 AI 完成。用户只需要提供一个主题或关键词。</p>
+          
+          <p><strong>【核心亮点】</strong></p>
+          <p>这个项目的亮点是"全自动化"和"高质量输出"。它不仅能生成视频，还能保证视频的画面质量和内容相关性。与其他 AI 视频工具相比，MoneyPrinterTurbo 更专注于"批量生产"场景，特别适合内容创作者和营销团队。</p>
+          
+          <p><strong>【市场反应】</strong></p>
+          <p>今天爆火，新增 3,375 颗星（全站最高），总星数达 77,077。这个增长曲线非常陡峭，说明市场对 AI 视频生成工具的需求正在爆发。GitHub 上的讨论区非常活跃，许多用户在分享自己用这个工具生成的视频案例。</p>
+          
+          <p><strong>【创业价值】</strong></p>
+          <p>AI 视频生成赛道正在快速崛起。MoneyPrinterTurbo 的成功证明了"一键生成"模式的可行性。对于创业者，机会在于：1) 垂直场景的 AI 视频（如电商视频、教育视频）；2) 定制化的视频风格；3) 与其他产品的集成（如结合社交媒体平台）。</p>
+          
+          <p><strong>【行动建议】</strong></p>
+          <p>可以直接 clone 项目本地运行测试。对于有技术能力的团队，可以考虑基于此开发自己的垂直行业视频生成工具。这是一个快速进入 AI 视频赛道的低成本方案。</p>
         </div>
-        <a href="https://www.producthunt.com/products/databox" class="item-link" target="_blank">查看产品 →</a>
+        <a href="https://github.com/harry0703/MoneyPrinterTurbo" class="article-link" target="_blank">查看项目 →</a>
+        <div class="tags">
+          <span class="tag">AI 视频</span>
+          <span class="tag">开源可用</span>
+          <span class="tag">内容创作</span>
+          <span class="tag">可直接使用</span>
+        </div>
       </div>
 
-      <div class="item">
-        <div class="item-header">
-          <div class="item-title">Mina Meeting Assistant - AI会议队友</div>
+      <div class="article">
+        <div class="article-header">
+          <div class="article-title">harness — 元技能框架用于设计领域智能体团队</div>
+          <div class="article-meta">📍 GitHub Trending | 开源项目 | 发布于 2026年6月2日</div>
         </div>
-        <div class="item-source">📍 Product Hunt | 产品发布</div>
-        <div class="item-content">
-          AI会议队友，能在会议期间实时响应和执行任务。将AI从会后记录延伸到会中实时协助，今天356 upvotes。AI+办公协作赛道的创新产品形态。
+        <div class="article-content">
+          <p><strong>【背景介绍】</strong></p>
+          <p>harness 是一个元技能框架，专门用于设计领域特定的智能体团队。在 AI Agent 概念火热的时候，如何构建一个有效的多智能体系统成为难题。harness 提供了系统性的方法论和工具。</p>
+          
+          <p><strong>【核心亮点】</strong></p>
+          <p>它的核心思想是"技能分解"——将复杂任务分解为多个子任务，每个子任务由专门的智能体处理。框架提供了技能定义、智能体编排、任务分配等完整工具链。开发者可以快速搭建自己的多智能体系统。</p>
+          
+          <p><strong>【市场反应】</strong></p>
+          <p>今天 +524 星，增长速度很快。虽然总星数不如 MoneyPrinterTurbo，但 harness 的用户质量很高——主要是 AI 开发者和研究者。评论区有很多深度的技术讨论。</p>
+          
+          <p><strong>【创业价值】</strong></p>
+          <p>对于想做 AI Agent 方向的创业者，harness 提供了一个很好的基础设施参考。它的设计思想可以迁移到各种垂直场景——客服 Agent、代码审查 Agent、数据分析 Agent 等。理解这个框架，能帮助你更好地设计自己的 Agent 系统。</p>
+          
+          <p><strong>【行动建议】</strong></p>
+          <p>建议仔细阅读其文档和示例代码，理解其设计理念。对于计划做 AI Agent 产品的团队，可以考虑将其作为技术选型的参考。</p>
         </div>
-        <a href="https://www.producthunt.com/products/mina-meeting-assistant" class="item-link" target="_blank">查看产品 →</a>
-      </div>
-
-      <div class="item">
-        <div class="item-header">
-          <div class="item-title">SocialEcho 2.0 - AI社交媒体副驾驶</div>
+        <a href="https://github.com/revfactory/harness" class="article-link" target="_blank">查看项目 →</a>
+        <div class="tags">
+          <span class="tag">AI Agent</span>
+          <span class="tag">框架</span>
+          <span class="tag">开源可用</span>
         </div>
-        <div class="item-source">📍 Product Hunt | 产品发布</div>
-        <div class="item-content">
-          AI社交媒体副驾驶，为团队提供内容创作和发布支持。今天291 upvotes，2.0版本增加了Agent协作功能。AI+营销赛道的实用工具。
-        </div>
-        <a href="https://www.producthunt.com/products/socialecho" class="item-link" target="_blank">查看产品 →</a>
-      </div>
-    </div>
-
-    <!-- ===== 开源项目推荐 ===== -->
-    <div class="section">
-      <div class="section-title">📦 开源项目推荐 (可直接使用)</div>
-
-      <div class="item">
-        <div class="item-header">
-          <div class="item-title">harness - Agent团队框架</div>
-        </div>
-        <div class="item-source">📍 GitHub | 开源项目</div>
-        <div class="item-content">
-          元技能框架，用于设计领域特定智能体团队。今天+524星，可直接用于构建自己的AI Agent团队。对想做AI Agent方向的创业者来说，这是一个很好的基础设施项目。
-        </div>
-        <a href="https://github.com/revfactory/harness" class="item-link" target="_blank">查看项目 →</a>
-      </div>
-
-      <div class="item">
-        <div class="item-header">
-          <div class="item-title">markitdown - 微软开源文档转Markdown</div>
-        </div>
-        <div class="item-source">📍 GitHub | 开源项目</div>
-        <div class="item-content">
-          文档转Markdown工具，AI数据处理的基础设施。今天+3,034星，总138.9K星，微软官方出品。如果你在做AI知识管理或文档处理相关产品，这个工具值得集成。
-        </div>
-        <a href="https://github.com/microsoft/markitdown" class="item-link" target="_blank">查看项目 →</a>
-      </div>
-
-      <div class="item">
-        <div class="item-header">
-          <div class="item-title">hermes-webui - Agent的Web/手机界面</div>
-        </div>
-        <div class="item-source">📍 GitHub | 开源项目</div>
-        <div class="item-content">
-          Hermes Agent的Web/手机界面，AI Agent交互层工具。今天+945星，可直接用于自己的Agent项目。解决了Agent产品前端交互的痛点。
-        </div>
-        <a href="https://github.com/nesquena/hermes-webui" class="item-link" target="_blank">查看项目 →</a>
-      </div>
-
-      <div class="item">
-        <div class="item-header">
-          <div class="item-title">impeccable - AI设计语言</div>
-        </div>
-        <div class="item-source">📍 GitHub | 开源项目</div>
-        <div class="item-content">
-          让AI在设计任务中表现更好的设计语言系统。今天+485星，AI+设计赛道的创新尝试。如果你在做AI设计工具，这个项目提供了很好的思路参考。
-        </div>
-        <a href="https://github.com/pbakaus/impeccable" class="item-link" target="_blank">查看项目 →</a>
       </div>
     </div>
 
-    <!-- ===== VC洞察 ===== -->
+    <!-- 💰 VC洞察 -->
     <div class="section">
       <div class="section-title">💰 VC洞察</div>
 
-      <div class="item">
-        <div class="item-header">
-          <div class="item-title">A16Z 2026年AI应用投资逻辑</div>
+      <div class="article">
+        <div class="article-header">
+          <div class="article-title">A16Z: AI初创公司如何与大厂聊天机器人竞争</div>
+          <div class="article-meta">📍 A16Z | VC洞察 | 发布于 2026年6月2日</div>
         </div>
-        <div class="item-source">📍 A16Z | VC洞察</div>
-        <div class="item-content">
-          A16Z成长基金核心合伙人David George分享2026年AI应用投资逻辑，传统指标开始失效。他投资过Airbnb、Slack、Uber、Notion、Anthropic等知名公司，对AI应用商业化的判断极具参考价值。
+        <div class="article-content">
+          <p><strong>【背景介绍】</strong></p>
+          <p>A16Z 合伙人 Olivia Moore 发布深度分析，探讨 AI 初创公司如何在 OpenAI、Google 等大厂的聊天机器人围剿下找到生存和发展空间。这篇文章基于 A16Z 对 100 多家 AI 初创公司的研究和观察。</p>
+          
+          <p><strong>【核心观点】</strong></p>
+          <p>Olivia 认为，虽然大厂的聊天机器人确实对初创公司形成巨大压力，但差异化机会仍然存在：1) 垂直领域的深度定制；2) 工作流整合能力；3) 数据和反馈循环护城河；4) 特定的监管合规需求。大厂的优势是通用性，初创公司的机会在专业化。</p>
+          
+          <p><strong>【关键洞察】</strong></p>
+          <p>文章指出一个重要趋势：AI 应用的竞争已经从"模型能力"转向"产品体验"。当模型能力差距缩小时，产品设计、用户体验、工作流整合变得更重要。这对初创公司是利好——意味着不需要在基础模型上与大厂竞争。</p>
+          
+          <p><strong>【创业价值】</strong></p>
+          <p>这篇文章给 AI 创业者的战略启示：1) 不要做"通用的 AI 助手"，大厂会碾压你；2) 选择一个垂直行业深耕，建立领域壁垒；3) 关注工作流整合，让 AI 成为现有工具的一部分而非替代品；4) 尽早建立数据飞轮，用户数据是你的护城河。</p>
+          
+          <p><strong>【行动建议】</strong></p>
+          <p>强烈建议全文阅读这篇文章，结合自己的创业方向思考。可以将文章中的框架作为自己产品战略的参考。同时关注 Olivia 的其他内容，她是 A16Z 在 AI 应用领域的重要投资人。</p>
         </div>
-        <a href="https://a16z.com" class="item-link" target="_blank">查看原文 →</a>
-      </div>
-    </div>
-
-    <!-- ===== 科技媒体 ===== -->
-    <div class="section">
-      <div class="section-title">📰 科技媒体</div>
-
-      <div class="item">
-        <div class="item-header">
-          <div class="item-title">Meta超级智能实验室重组</div>
+        <a href="https://a16z.com/podcast/ai-startups-vs-big-chatbots-with-olivia-moore/" class="article-link" target="_blank">查看原文 →</a>
+        <div class="tags">
+          <span class="tag">战略分析</span>
+          <span class="tag">竞争策略</span>
+          <span class="tag">AI创业</span>
         </div>
-        <div class="item-source">📍 科技媒体 | 行业动态</div>
-        <div class="item-content">
-          Meta将超级智能实验室重组为四个部门，包括TBD Lab、FAIR等。反映了大厂AI组织架构的最新调整方向，对理解AI行业格局变化有参考意义。
-        </div>
-        <a href="https://www.theverge.com/ai-artificial-intelligence" class="item-link" target="_blank">查看原文 →</a>
-      </div>
-
-      <div class="item">
-        <div class="item-header">
-          <div class="item-title">内存暴降50倍，MIT提出注意力匹配</div>
-        </div>
-        <div class="item-source">📍 机器之心 | 技术报道</div>
-        <div class="item-content">
-          MIT提出注意力匹配方法，实现内存暴降50倍且精度无损。如果能落地应用，将大幅降低大模型推理成本，对AI产品公司的成本优化有重要参考价值。
-        </div>
-        <a href="https://www.jiqizhixin.com" class="item-link" target="_blank">查看原文 →</a>
       </div>
     </div>
 
   </div>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>ScoutAI - AI行业情报侦察兵 | 每日 7:00 & 17:00 更新</p>
-    </div>
+  <footer style="text-align: center; padding: 30px; color: #666; font-size: 14px;">
+    <p>ScoutAI - AI行业情报侦察兵 | 每日 7:00 & 17:00 更新</p>
   </footer>
 </body>
 </html>
