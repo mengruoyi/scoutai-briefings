@@ -1,6 +1,8 @@
 {
   "version": 2,
   "name": "scoutai-briefings",
+  "buildCommand": "node scripts/build.js",
+  "outputDirectory": ".",
   "routes": [
     {
       "src": "/",
