@@ -118,6 +118,22 @@ function generateIndex(briefings) {
         <a href="${latest ? latest.url : '#'}" class="btn btn-primary">阅读本期资讯</a>
       </div>
     </section>
+
+    ${history.length > 0 ? `
+    <section class="history-section">
+      <h2 class="section-title">📚 往期资讯</h2>
+      <div class="history-grid">
+        ${history.map(b => `
+        <article class="history-card">
+          <a href="${b.url}" class="history-link">
+            <span class="history-date">${b.date}</span>
+            <span class="history-time">${b.time}</span>
+          </a>
+        </article>
+        `).join('')}
+      </div>
+    </section>
+    ` : ''}
   </main>
 
   <footer class="site-footer">
