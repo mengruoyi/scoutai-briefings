@@ -12,16 +12,17 @@
     .briefing-header .meta { opacity: 0.9; font-size: 14px; }
     .section { margin: 32px 0; }
     .section-title { font-size: 18px; font-weight: 600; color: #059669; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #059669; }
-    .item { background: white; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-    .item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-    .item-title { font-size: 16px; font-weight: 600; flex: 1; }
-    .item-score { background: #059669; color: white; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: 600; }
+    .item { background: white; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #E7E5E4; }
+    .item-header { margin-bottom: 12px; }
+    .item-title { font-size: 16px; font-weight: 600; }
     .item-source { color: #57534E; font-size: 13px; margin-bottom: 8px; }
     .item-content { color: #1C1917; line-height: 1.7; margin-bottom: 12px; }
     .item-link { color: #059669; text-decoration: none; font-weight: 500; }
     .item-link:hover { text-decoration: underline; }
     .back-btn { display: inline-block; margin: 20px 24px; color: #059669; text-decoration: none; }
     .back-btn:hover { text-decoration: underline; }
+    .stats-grid { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+    .stats-tag { background: #ECFDF5; color: #059669; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; }
   </style>
 </head>
 <body>
@@ -35,13 +36,21 @@
   </div>
 
   <div class="briefing-content">
+    <div class="stats-grid">
+      <span class="stats-tag">📊 共18条</span>
+      <span class="stats-tag">🚀 产品发布 6个</span>
+      <span class="stats-tag">📦 开源项目 7个</span>
+      <span class="stats-tag">💰 VC洞察 3篇</span>
+      <span class="stats-tag">📰 科技媒体 2篇</span>
+    </div>
+
+    <!-- ===== 今日精选 Top 5 ===== -->
     <div class="section">
       <div class="section-title">🔥 今日精选 Top 5</div>
       
       <div class="item">
         <div class="item-header">
           <div class="item-title">🥇 TradingAgents - 多智能体金融交易框架</div>
-          <div class="item-score">92分</div>
         </div>
         <div class="item-source">📍 GitHub | 开源项目</div>
         <div class="item-content">
@@ -55,7 +64,6 @@
       <div class="item">
         <div class="item-header">
           <div class="item-title">🥈 MoneyPrinterTurbo - AI一键生成短视频</div>
-          <div class="item-score">90分</div>
         </div>
         <div class="item-source">📍 GitHub | 开源项目</div>
         <div class="item-content">
@@ -69,7 +77,6 @@
       <div class="item">
         <div class="item-header">
           <div class="item-title">🥉 Framer - AI企业级网站构建平台</div>
-          <div class="item-score">89分</div>
         </div>
         <div class="item-source">📍 Product Hunt | 产品发布</div>
         <div class="item-content">
@@ -83,7 +90,6 @@
       <div class="item">
         <div class="item-header">
           <div class="item-title">A16Z: AI初创公司如何与大厂竞争</div>
-          <div class="item-score">89分</div>
         </div>
         <div class="item-source">📍 A16Z | VC洞察</div>
         <div class="item-content">
@@ -97,7 +103,6 @@
       <div class="item">
         <div class="item-header">
           <div class="item-title">OpenAI如何服务8亿周活用户</div>
-          <div class="item-score">88分</div>
         </div>
         <div class="item-source">📍 A16Z | VC洞察</div>
         <div class="item-content">
@@ -109,20 +114,136 @@
       </div>
     </div>
 
+    <!-- ===== 更多产品发布 ===== -->
     <div class="section">
-      <div class="section-title">📊 简报统计</div>
+      <div class="section-title">🚀 更多产品发布</div>
+
       <div class="item">
-        <div class="item-content">
-          <strong>本期概览：</strong><br>
-          • 总计：18条资讯<br>
-          • 产品发布：6个<br>
-          • 开源项目：7个<br>
-          • VC洞察：3篇<br>
-          • 科技媒体：2篇<br><br>
-          <strong>聚焦方向：</strong>应用落地、可直接使用的开源项目、VC战略洞察
+        <div class="item-header">
+          <div class="item-title">Databox MCP - AI查询企业数据</div>
         </div>
+        <div class="item-source">📍 Product Hunt | 产品发布</div>
+        <div class="item-content">
+          MCP协议工具，让Claude、ChatGPT直接查询分析企业业务数据。解决大模型与企业内部数据隔离的痛点，今天264 upvotes。对企业AI应用落地有直接参考价值。
+        </div>
+        <a href="https://www.producthunt.com/products/databox" class="item-link" target="_blank">查看产品 →</a>
+      </div>
+
+      <div class="item">
+        <div class="item-header">
+          <div class="item-title">Mina Meeting Assistant - AI会议队友</div>
+        </div>
+        <div class="item-source">📍 Product Hunt | 产品发布</div>
+        <div class="item-content">
+          AI会议队友，能在会议期间实时响应和执行任务。将AI从会后记录延伸到会中实时协助，今天356 upvotes。AI+办公协作赛道的创新产品形态。
+        </div>
+        <a href="https://www.producthunt.com/products/mina-meeting-assistant" class="item-link" target="_blank">查看产品 →</a>
+      </div>
+
+      <div class="item">
+        <div class="item-header">
+          <div class="item-title">SocialEcho 2.0 - AI社交媒体副驾驶</div>
+        </div>
+        <div class="item-source">📍 Product Hunt | 产品发布</div>
+        <div class="item-content">
+          AI社交媒体副驾驶，为团队提供内容创作和发布支持。今天291 upvotes，2.0版本增加了Agent协作功能。AI+营销赛道的实用工具。
+        </div>
+        <a href="https://www.producthunt.com/products/socialecho" class="item-link" target="_blank">查看产品 →</a>
       </div>
     </div>
+
+    <!-- ===== 开源项目推荐 ===== -->
+    <div class="section">
+      <div class="section-title">📦 开源项目推荐 (可直接使用)</div>
+
+      <div class="item">
+        <div class="item-header">
+          <div class="item-title">harness - Agent团队框架</div>
+        </div>
+        <div class="item-source">📍 GitHub | 开源项目</div>
+        <div class="item-content">
+          元技能框架，用于设计领域特定智能体团队。今天+524星，可直接用于构建自己的AI Agent团队。对想做AI Agent方向的创业者来说，这是一个很好的基础设施项目。
+        </div>
+        <a href="https://github.com/revfactory/harness" class="item-link" target="_blank">查看项目 →</a>
+      </div>
+
+      <div class="item">
+        <div class="item-header">
+          <div class="item-title">markitdown - 微软开源文档转Markdown</div>
+        </div>
+        <div class="item-source">📍 GitHub | 开源项目</div>
+        <div class="item-content">
+          文档转Markdown工具，AI数据处理的基础设施。今天+3,034星，总138.9K星，微软官方出品。如果你在做AI知识管理或文档处理相关产品，这个工具值得集成。
+        </div>
+        <a href="https://github.com/microsoft/markitdown" class="item-link" target="_blank">查看项目 →</a>
+      </div>
+
+      <div class="item">
+        <div class="item-header">
+          <div class="item-title">hermes-webui - Agent的Web/手机界面</div>
+        </div>
+        <div class="item-source">📍 GitHub | 开源项目</div>
+        <div class="item-content">
+          Hermes Agent的Web/手机界面，AI Agent交互层工具。今天+945星，可直接用于自己的Agent项目。解决了Agent产品前端交互的痛点。
+        </div>
+        <a href="https://github.com/nesquena/hermes-webui" class="item-link" target="_blank">查看项目 →</a>
+      </div>
+
+      <div class="item">
+        <div class="item-header">
+          <div class="item-title">impeccable - AI设计语言</div>
+        </div>
+        <div class="item-source">📍 GitHub | 开源项目</div>
+        <div class="item-content">
+          让AI在设计任务中表现更好的设计语言系统。今天+485星，AI+设计赛道的创新尝试。如果你在做AI设计工具，这个项目提供了很好的思路参考。
+        </div>
+        <a href="https://github.com/pbakaus/impeccable" class="item-link" target="_blank">查看项目 →</a>
+      </div>
+    </div>
+
+    <!-- ===== VC洞察 ===== -->
+    <div class="section">
+      <div class="section-title">💰 VC洞察</div>
+
+      <div class="item">
+        <div class="item-header">
+          <div class="item-title">A16Z 2026年AI应用投资逻辑</div>
+        </div>
+        <div class="item-source">📍 A16Z | VC洞察</div>
+        <div class="item-content">
+          A16Z成长基金核心合伙人David George分享2026年AI应用投资逻辑，传统指标开始失效。他投资过Airbnb、Slack、Uber、Notion、Anthropic等知名公司，对AI应用商业化的判断极具参考价值。
+        </div>
+        <a href="https://a16z.com" class="item-link" target="_blank">查看原文 →</a>
+      </div>
+    </div>
+
+    <!-- ===== 科技媒体 ===== -->
+    <div class="section">
+      <div class="section-title">📰 科技媒体</div>
+
+      <div class="item">
+        <div class="item-header">
+          <div class="item-title">Meta超级智能实验室重组</div>
+        </div>
+        <div class="item-source">📍 科技媒体 | 行业动态</div>
+        <div class="item-content">
+          Meta将超级智能实验室重组为四个部门，包括TBD Lab、FAIR等。反映了大厂AI组织架构的最新调整方向，对理解AI行业格局变化有参考意义。
+        </div>
+        <a href="https://www.theverge.com/ai-artificial-intelligence" class="item-link" target="_blank">查看原文 →</a>
+      </div>
+
+      <div class="item">
+        <div class="item-header">
+          <div class="item-title">内存暴降50倍，MIT提出注意力匹配</div>
+        </div>
+        <div class="item-source">📍 机器之心 | 技术报道</div>
+        <div class="item-content">
+          MIT提出注意力匹配方法，实现内存暴降50倍且精度无损。如果能落地应用，将大幅降低大模型推理成本，对AI产品公司的成本优化有重要参考价值。
+        </div>
+        <a href="https://www.jiqizhixin.com" class="item-link" target="_blank">查看原文 →</a>
+      </div>
+    </div>
+
   </div>
 
   <footer class="site-footer">
