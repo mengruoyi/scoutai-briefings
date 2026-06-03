@@ -138,12 +138,20 @@ function generateIndex(briefings) {
           <a href="${b.url}" class="history-link">
             <span class="history-date">${b.date}</span>
             <span class="history-time">${b.time}</span>
+            <span class="history-desc">AI行业情报资讯</span>
           </a>
         </article>
         `).join('')}
       </div>
     </section>
-    ` : ''}
+    ` : `
+    <section class="history-section">
+      <h2 class="section-title">📚 往期资讯</h2>
+      <div class="empty-state">
+        <p>暂无往期资讯，每日 7:00 和 17:00 自动更新</p>
+      </div>
+    </section>
+    `}
   </main>
 
   <footer class="site-footer">
