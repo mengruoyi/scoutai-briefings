@@ -119,10 +119,10 @@
     // 高亮匹配文本
     function highlightText(text, query) {
       if (!query || !text) return text;
-      const specialChars = ['.','*','+','?','^','$','{','}','(',')','|','[',']','\'];
+      const specialChars = ['.','*','+','?','^','$','{','}','(',')','|','[',']','\\'];
       let escaped = '';
       for (let i = 0; i < query.length; i++) {
-        escaped += specialChars.includes(query[i]) ? '\' + query[i] : query[i];
+        escaped += specialChars.includes(query[i]) ? '\\' + query[i] : query[i];
       }
       const regex = new RegExp('(' + escaped + ')', 'gi');
       return text.replace(regex, '<mark>$1</mark>');
