@@ -85,7 +85,7 @@ function generateIndex(briefings) {
 <body>
   <header class="site-header">
     <div class="container">
-      <div class="logo"><span class="logo-icon">🔍</span><h1>ScoutAI</h1></div>
+      <a href="/" class="logo" style="text-decoration:none;color:inherit;"><span class="logo-icon">🔍</span><h1>ScoutAI</h1></a>
       <p class="tagline">AI行业情报侦察兵 · 深度资讯每日更新</p>
       <div class="stats">
         <span>📊 知识库检索</span>
@@ -108,7 +108,10 @@ function generateIndex(briefings) {
     </div>
 
     <div id="search-results" class="search-results">
-      <div class="search-stats" id="search-stats"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <div class="search-stats" id="search-stats"></div>
+        <a href="/" style="color:#059669;text-decoration:none;font-size:14px;font-weight:500;">🏠 返回首页</a>
+      </div>
       <div id="hits-container"></div>
       <div id="pagination-container"></div>
     </div>
