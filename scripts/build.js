@@ -30,11 +30,12 @@ function getBriefings() {
     if (match) {
       const [, year, month, day, hour, minute] = match;
       const date = new Date(`${year}-${month}-${day}T${hour}:${minute}:00+08:00`);
+      const cnOptions = { timeZone: 'Asia/Shanghai' };
       return {
         file,
         url: `/briefing/${file}`,
-        date: date.toLocaleDateString('zh-CN'),
-        time: date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }),
+        date: date.toLocaleDateString('zh-CN', cnOptions),
+        time: date.toLocaleTimeString('zh-CN', { ...cnOptions, hour: '2-digit', minute: '2-digit' }),
         timestamp: date.getTime()
       };
     }
