@@ -74,6 +74,12 @@ function generateIndex(briefings) {
     .search-hit-content { color: #666; font-size: 14px; line-height: 1.6; margin-bottom: 8px; }
     .search-hit-meta { font-size: 12px; color: #999; }
     .search-hit-tag { display: inline-block; background: #e8f5e9; color: #059669; padding: 2px 10px; border-radius: 12px; font-size: 12px; margin-right: 8px; }
+    .search-empty { text-align: center; padding: 40px; color: #999; font-size: 15px; }
+    .ais-Pagination { text-align: center; margin-top: 20px; }
+    .ais-Pagination-item { display: inline-block; margin: 0 4px; padding: 8px 14px; border-radius: 8px; border: 1px solid #ddd; background: white; color: #059669; cursor: pointer; font-size: 14px; }
+    .ais-Pagination-item--selected { background: #059669; color: white; border-color: #059669; }
+    .ais-Pagination-link { background: none; border: none; cursor: pointer; color: inherit; font-size: inherit; padding: 0; }
+    mark { background: #fef3c7; color: #92400e; padding: 1px 4px; border-radius: 3px; }
   </style>
 </head>
 <body>
@@ -95,7 +101,8 @@ function generateIndex(briefings) {
         <div class="search-title">🔎 搜索历史资讯</div>
         <div class="search-box">
           <span class="search-icon">🔍</span>
-          <div id="search-input"></div>
+          <input type="text" id="search-input-box" class="search-input" placeholder="输入关键词搜索 AI 资讯..." autocomplete="off">
+          <button id="search-submit-btn" class="search-submit-btn" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:#059669;color:white;border:none;border-radius:25px;padding:10px 20px;font-size:14px;cursor:pointer;">搜索</button>
         </div>
       </div>
     </div>
@@ -147,42 +154,143 @@ function generateIndex(briefings) {
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.20.0/dist/algoliasearch-lite.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.60.0/dist/instantsearch.production.min.js"></script>
   <script>
-    const searchClient = algoliasearch('CQ8365G2HD', '53f5d3645c26cba90968ac17ee13b03b', {
-      hosts: {
-        read: [{ url: 'cq8365g2hd.algolia.net', protocol: 'https' }],
-        write: [{ url: 'cq8365g2hd.algolia.net', protocol: 'https' }]
+    // Algolia 搜索配置
+    const ALGOLIA_APP_ID = 'CQ8365G2HD';
+    const ALGOLIA_API_KEY = '53f5d3645c26cba90968ac17ee13b03b';
+    const ALGOLIA_INDEX = 'scoutai_news';
+
+    // 使用 fetch 直接调用 Algolia REST API（绕过 DSN 端点）
+    async function searchAlgolia(query, page = 0) {
+      const url = 'https://cq8365g2hd.algolia.net/1/indexes/' + ALGOLIA_INDEX + '/query';
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'X-Algolia-Application-Id': ALGOLIA_APP_ID,
+          'X-Algolia-API-Key': ALGOLIA_API_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          query: query,
+          hitsPerPage: 20,
+          page: page
+        })
+      });
+      return await response.json();
+    }
+
+    // 高亮匹配文本
+    function highlightText(text, query) {
+      if (!query || !text) return text;
+      const specialChars = ['.','*','+','?','^','$','{','}','(',')','|','[',']','\\'];
+      let escaped = '';
+      for (let i = 0; i < query.length; i++) {
+        escaped += specialChars.includes(query[i]) ? '\\' + query[i] : query[i];
       }
-    });
-    const search = instantsearch({ indexName: 'scoutai_news', searchClient });
+      const regex = new RegExp('(' + escaped + ')', 'gi');
+      return text.replace(regex, '<mark>$1</mark>');
+    }
 
-    search.addWidget(instantsearch.widgets.searchBox({ container: '#search-input', placeholder: '输入关键词搜索 AI 资讯...', showSubmit: true, showReset: false }));
+    // 渲染搜索结果
+    function renderResults(data, query) {
+      const hitsContainer = document.getElementById('hits-container');
+      const statsContainer = document.getElementById('search-stats');
+      const paginationContainer = document.getElementById('pagination-container');
 
-    search.addWidget(instantsearch.widgets.hits({
-      container: '#hits-container',
-      templates: {
-        item: (hit, { html, components }) => html\`
-          <div class="search-hit">
-            <div class="search-hit-title"><a href="\${hit.url}" target="_blank">\${components.Highlight({ hit, attribute: 'title' })}</a></div>
-            <div class="search-hit-content">\${components.Highlight({ hit, attribute: 'content' })}</div>
-            <div class="search-hit-meta"><span class="search-hit-tag">\${hit.category}</span><span>\${hit.date} \${hit.time}</span></div>
-          </div>\`,
-        empty: '没有找到相关资讯'
+      if (!data || !data.hits || data.hits.length === 0) {
+        hitsContainer.innerHTML = '<div class="search-empty">没有找到相关资讯</div>';
+        statsContainer.textContent = '找到 0 条相关资讯';
+        paginationContainer.innerHTML = '';
+        document.getElementById('search-results').style.display = 'block';
+        document.getElementById('latest-section').style.display = 'none';
+        return;
       }
-    }));
 
-    search.addWidget(instantsearch.widgets.stats({ container: '#search-stats', templates: { text: (data) => \`找到 \${data.nbHits} 条相关资讯\` } }));
-    search.addWidget(instantsearch.widgets.pagination({ container: '#pagination-container', padding: 2, showFirst: false, showLast: false }));
+      statsContainer.textContent = '找到 ' + data.nbHits + ' 条相关资讯';
 
-    search.on('render', () => {
-      const query = search.helper.state.query;
-      document.getElementById('search-results').style.display = query ? 'block' : 'none';
-      document.getElementById('latest-section').style.display = query ? 'none' : 'block';
+      hitsContainer.innerHTML = data.hits.map(hit => {
+        const title = highlightText(hit.title, query);
+        const content = highlightText(hit.content ? hit.content.substring(0, 200) : '', query);
+        return '<div class="search-hit">' +
+          '<div class="search-hit-title"><a href="' + hit.url + '" target="_blank">' + title + '</a></div>' +
+          '<div class="search-hit-content">' + content + '</div>' +
+          '<div class="search-hit-meta"><span class="search-hit-tag">' + (hit.category || 'AI') + '</span><span>' + (hit.date || '') + ' ' + (hit.time || '') + '</span></div>' +
+          '</div>';
+      }).join('');
+
+      // 分页
+      const totalPages = data.nbPages || 1;
+      if (totalPages > 1) {
+        let paginationHTML = '';
+        const currentPage = data.page || 0;
+        const startPage = Math.max(0, currentPage - 2);
+        const endPage = Math.min(totalPages -1, currentPage + 2);
+
+        if (currentPage > 0) {
+          paginationHTML += '<button class="ais-Pagination-item ais-Pagination-link" data-page="' + (currentPage - 1) + '">‹</button>';
+        }
+        for (let i = startPage; i <= endPage; i++) {
+          paginationHTML += '<button class="ais-Pagination-item ais-Pagination-link' + (i === currentPage ? ' ais-Pagination-item--selected' : '') + '" data-page="' + i + '">' + (i + 1) + '</button>';
+        }
+        if (currentPage < totalPages - 1) {
+          paginationHTML += '<button class="ais-Pagination-item ais-Pagination-link" data-page="' + (currentPage + 1) + '">›</button>';
+        }
+        paginationContainer.innerHTML = '<div class="ais-Pagination">' + paginationHTML + '</div>';
+
+        // 绑定分页事件
+        paginationContainer.querySelectorAll('[data-page]').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const currentQuery = document.getElementById('search-input-box').value;
+            searchAlgolia(currentQuery, parseInt(this.dataset.page)).then(data => {
+              renderResults(data, currentQuery);
+            });
+          });
+        });
+      } else {
+        paginationContainer.innerHTML = '';
+      }
+
+      document.getElementById('search-results').style.display = 'block';
+      document.getElementById('latest-section').style.display = 'none';
+    }
+
+    // 初始化搜索
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('search-input-box');
+      let debounceTimer = null;
+
+      searchInput.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        const query = this.value.trim();
+        if (!query) {
+          document.getElementById('search-results').style.display = 'none';
+          document.getElementById('latest-section').style.display = 'block';
+          return;
+        }
+        debounceTimer = setTimeout(function() {
+          searchAlgolia(query, 0).then(data => renderResults(data, query));
+        }, 300);
+      });
+
+      // 回车键直接搜索
+      searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          clearTimeout(debounceTimer);
+          const query = this.value.trim();
+          if (query) {
+            searchAlgolia(query, 0).then(data => renderResults(data, query));
+          }
+        }
+      });
+
+      // 搜索按钮点击
+      document.getElementById('search-submit-btn').addEventListener('click', function() {
+        const query = searchInput.value.trim();
+        if (query) {
+          searchAlgolia(query, 0).then(data => renderResults(data, query));
+        }
+      });
     });
-
-    search.start();
   </script>
 </body>
 </html>`;
