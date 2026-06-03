@@ -59,17 +59,17 @@ function extractArticlesSimple(html, date, time, filename) {
   for (let i = 1; i < parts.length; i++) {
     const part = parts[i];
     
-    // 提取标题
-    const titleMatch = part.match(/<div class="article-title">([^<]*)/);
+    // 提取标题（兼容 <a class="article-title"> 和 <div class="article-title">）
+    const titleMatch = part.match(/class="article-title">([^<]*)/);
     if (!titleMatch) continue;
     const title = titleMatch[1].trim();
-    
+
     // 提取来源
     const sourceMatch = part.match(/<div class="article-meta">([^<]*)/);
     const source = sourceMatch ? sourceMatch[1].trim() : '未知来源';
-    
-    // 提取内容
-    const contentMatch = part.match(/<div class="article-content">([\s\S]*?)<\/div>\s*<a /);
+
+    // 提取内容（到 </div> 结束，取 article-content 内部）
+    const contentMatch = part.match(/<div class="article-content">([\s\S]*?)<\/div>\s*<div class="tags">/);
     const rawContent = contentMatch ? contentMatch[1] : '';
     const content = rawContent
       .replace(/<[^>]*>/g, ' ')
@@ -77,18 +77,20 @@ function extractArticlesSimple(html, date, time, filename) {
       .replace(/\s+/g, ' ')
       .trim()
       .substring(0, 3000);
-    
+
     // 提取链接
-    const linkMatch = part.match(/href="([^"]*)"/);
-    const url = linkMatch ? linkMatch[1] : '';
+    const linkMatch = part.match(/class="article-title"\s+href="([^"]*)"/);
+    const url = linkMatch ? linkMatch[1] : (part.match(/href="([^"]*)"/) || ['', ''])[1];
     
-    // 分类
+    // 分类（从来源和内容推断）
     let category = '其他';
     if (source.includes('Product Hunt')) category = '产品发布';
     else if (source.includes('GitHub')) category = '开源项目';
-    else if (source.includes('VC') || source.includes('A16Z') || source.includes('a16z')) category = 'VC洞察';
-    else if (source.includes('媒体')) category = '科技媒体';
-    else if (source.includes('研究')) category = '研究动态';
+    else if (source.includes('VC') || source.includes('A16Z') || source.includes('a16z') || source.includes('IPO') || source.includes('科创板')) category = 'VC洞察';
+    else if (source.includes('Hacker News') || source.includes('TechCrunch') || source.includes('36氪')) category = '科技媒体';
+    else if (source.includes('机器之心') || source.includes('量子位') || source.includes('OpenBMB')) category = '科技媒体';
+    else if (source.includes('研究') || source.includes('微软') || source.includes('Microsoft')) category = '产品发布';
+    else if (source.includes('Anthropic')) category = 'VC洞察';
     
     const objectID = `${filename}-${i}`;
     
