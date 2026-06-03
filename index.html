@@ -46,7 +46,7 @@
         <div class="search-title">🔎 搜索历史资讯</div>
         <div class="search-box">
           <span class="search-icon">🔍</span>
-          <input type="text" id="search-input" class="search-input" placeholder="输入关键词搜索 AI 资讯...">
+          <div id="search-input"></div>
         </div>
       </div>
     </div>
@@ -87,10 +87,15 @@
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.20.0/dist/algoliasearch-lite.umd.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.60.0/dist/instantsearch.production.min.js"></script>
   <script>
-    const searchClient = algoliasearch('CQ8365G2HD', '53f5d3645c26cba90968ac17ee13b03b');
-    const search = instantsearch({ indexName: 'scoutai_news', searchClient, routing: true });
+    const searchClient = algoliasearch('CQ8365G2HD', '53f5d3645c26cba90968ac17ee13b03b', {
+      hosts: {
+        read: [{ url: 'cq8365g2hd.algolia.net', protocol: 'https' }],
+        write: [{ url: 'cq8365g2hd.algolia.net', protocol: 'https' }]
+      }
+    });
+    const search = instantsearch({ indexName: 'scoutai_news', searchClient });
 
-    search.addWidget(instantsearch.widgets.searchBox({ container: '#search-input', placeholder: '输入关键词搜索...', showSubmit: false, showReset: false }));
+    search.addWidget(instantsearch.widgets.searchBox({ container: '#search-input', placeholder: '输入关键词搜索 AI 资讯...', showSubmit: true, showReset: false }));
 
     search.addWidget(instantsearch.widgets.hits({
       container: '#hits-container',
